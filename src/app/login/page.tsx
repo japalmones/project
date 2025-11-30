@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent } from 'react';
-import { saveToken } from '@/lib/auth';
+import { saveToken } from '@/lib/config';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -30,7 +30,7 @@ export default function LoginPage() {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/login`, {
+      const res = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -60,7 +60,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-purple-500 to-purple-400 relative overflow-hidden">
-      
       <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
 
@@ -69,9 +68,8 @@ export default function LoginPage() {
           <h1 className={`${kaushan.className} text-5xl text-center text-purple-700 drop-shadow-md`}>
             Welcome!
           </h1>
-
           <p className="text-center text-purple-600 text-sm -mt-2">
-          Shop your fave art stuff here!
+            Shop your fave art stuff here!
           </p>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -81,7 +79,6 @@ export default function LoginPage() {
               onChange={(e) => setUsername(e.target.value)}
               className="bg-purple-100 border-purple-400 text-purple-800 rounded-2xl placeholder-purple-400 focus:ring-2 focus:ring-purple-500 transition-all"
             />
-
             <Input
               type="password"
               placeholder="Password"
@@ -89,13 +86,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="bg-purple-100 border-purple-400 text-purple-800 rounded-2xl placeholder-purple-400 focus:ring-2 focus:ring-purple-500 transition-all"
             />
-
-            {error && (
-              <p className="text-purple-700 text-sm text-center animate-shake">
-                {error}
-              </p>
-            )}
-
+            {error && <p className="text-purple-700 text-sm text-center animate-shake">{error}</p>}
             <Button
               type="submit"
               disabled={loading}
@@ -127,17 +118,13 @@ export default function LoginPage() {
           60% { transform: translateX(-5px); }
           80% { transform: translateX(5px); }
         }
-        .animate-shake {
-          animation: shake 0.4s;
-        }
+        .animate-shake { animation: shake 0.4s; }
 
         @keyframes slideUpFade {
           0% { opacity: 0; transform: translateY(40px); }
           100% { opacity: 1; transform: translateY(0); }
         }
-        .animate-slideUpFade {
-          animation: slideUpFade 0.8s ease-out;
-        }
+        .animate-slideUpFade { animation: slideUpFade 0.8s ease-out; }
       `}</style>
     </div>
   );

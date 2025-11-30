@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { Kaushan_Script } from "next/font/google";
 
@@ -26,8 +26,7 @@ const products: Product[] = [
   { name: "Palette Knives (1 Set)", price: 450, image: "/paletteknives.jpg", rating: 5, sold: 240, category: "Painting" },
   { name: "Wooden palette", price: 85, image: "/woodpalette.jpg", rating: 5, sold: 320, category: "Painting" },
   { name: "Water Color", price: 109, image: "/watercolor.jpg", rating: 5, sold: 180, category: "Painting" },
-  
-  
+
   { name: "Sketch Book", price: 150, image: "/sketchbook.jpg", rating: 4, sold: 560, category: "Drawing" },
   { name: "Color Pen (48 pcs)", price: 400, image: "/colorpen.jpg", rating: 4.5, sold: 410, category: "Drawing" },
   { name: "Artist Graphite Pencils (12 pcs)", price: 150, image: "/graphite.jpg", rating: 4, sold: 350, category: "Drawing" },
@@ -45,8 +44,21 @@ const products: Product[] = [
 ];
 
 export default function Dashboard() {
-  const [selectedCategory, setSelectedCategory] =
-    useState<"All" | "Painting" | "Drawing">("All");
+  const [selectedCategory, setSelectedCategory] = useState<"All" | "Painting" | "Drawing">("All");
+  const [bubbles, setBubbles] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Generate bubbles only on client
+    const newBubbles = [...Array(25)].map(() => ({
+      size: Math.random() * 40 + 20,
+      left: Math.random() * 100,
+      delay: Math.random() * 15,
+      duration: Math.random() * 20 + 15,
+      opacity: Math.random() * 0.3 + 0.2,
+      color: `rgba(${200 + Math.random() * 55}, ${150 + Math.random() * 100}, 255, ${Math.random() * 0.3 + 0.2})`,
+    }));
+    setBubbles(newBubbles);
+  }, []);
 
   const filtered =
     selectedCategory === "All"
@@ -61,30 +73,21 @@ export default function Dashboard() {
     <div className="relative min-h-screen p-6 bg-gradient-to-br from-purple-400 via-purple-500 to-purple-700 font-sans overflow-hidden">
 
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(25)].map((_, i) => {
-          const size = Math.random() * 40 + 20;
-          const left = Math.random() * 100;
-          const delay = Math.random() * 15;
-          const duration = Math.random() * 20 + 15;
-          const opacity = Math.random() * 0.3 + 0.2;
-          const color = `rgba(${200 + Math.random() * 55}, ${150 + Math.random() * 100}, 255, ${opacity})`;
-
-          return (
-            <div
-              key={i}
-              className="absolute rounded-full shadow-xl"
-              style={{
-                width: size,
-                height: size,
-                left: `${left}%`,
-                bottom: `-50px`,
-                background: color,
-                filter: "blur(8px)",
-                animation: `floatBubble ${duration}s ease-in-out ${delay}s infinite`,
-              }}
-            />
-          );
-        })}
+        {bubbles.map((b, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full shadow-xl"
+            style={{
+              width: b.size,
+              height: b.size,
+              left: `${b.left}%`,
+              bottom: `-50px`,
+              background: b.color,
+              filter: "blur(8px)",
+              animation: `floatBubble ${b.duration}s ease-in-out ${b.delay}s infinite`,
+            }}
+          />
+        ))}
       </div>
 
       <div className="flex gap-3 mb-6 justify-center relative z-10">
@@ -111,7 +114,6 @@ export default function Dashboard() {
           >
             <div className="relative rounded-xl overflow-hidden">
 
-            
               <div className="w-full h-40 bg-white rounded-xl flex items-center justify-center overflow-hidden border border-purple-200 shadow-sm">
                 <img
                   src={item.image}
@@ -120,7 +122,6 @@ export default function Dashboard() {
                 />
               </div>
 
-            
               <button
                 onClick={() => handleAddToCart(item)}
                 className="absolute bottom-2 right-2 bg-purple-700 text-white text-xs px-3 py-1 rounded-lg transition duration-300 hover:bg-purple-800 opacity-0 group-hover:opacity-100"
@@ -129,7 +130,6 @@ export default function Dashboard() {
               </button>
             </div>
 
-        
             <div className="mt-3 p-3 bg-white/30 rounded-lg backdrop-blur-sm transition hover:bg-white/50 duration-300">
               <p className={`${kaushan.className} text-sm md:text-base font-medium line-clamp-2 text-purple-900`}>
                 {item.name}

@@ -32,14 +32,10 @@ export default function RegisterPage() {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/register`, {
+      const res = await fetch(`${API_BASE}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username,
-          password,
-          contact: Number(contact),
-        }),
+        body: JSON.stringify({ username, password, contact: Number(contact) }),
       });
 
       const data = await res.json();
@@ -52,7 +48,6 @@ export default function RegisterPage() {
 
       setSuccess(true);
       setLoading(false);
-
       setTimeout(() => router.push('/login'), 2000);
     } catch {
       setError('Network error. Please try again.');
@@ -62,7 +57,6 @@ export default function RegisterPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-300 via-purple-500 to-purple-700 relative overflow-hidden">
-    
       <div className="absolute top-0 left-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
 
@@ -79,7 +73,6 @@ export default function RegisterPage() {
               onChange={(e) => setUsername(e.target.value)}
               className="bg-purple-100 border-purple-400 text-purple-800 rounded-2xl placeholder-purple-500 focus:ring-2 focus:ring-purple-500 transition-all"
             />
-
             <Input
               type="password"
               placeholder="Password"
@@ -87,22 +80,17 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="bg-purple-100 border-purple-400 text-purple-800 rounded-2xl placeholder-purple-500 focus:ring-2 focus:ring-purple-500 transition-all"
             />
-
             <Input
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
               placeholder="Contact Number"
               value={contact}
-              onChange={(e) => {
-                const onlyNums = e.target.value.replace(/\D/g, '');
-                setContact(onlyNums);
-              }}
+              onChange={(e) => setContact(e.target.value.replace(/\D/g, ''))}
               className="bg-purple-100 border-purple-400 text-purple-800 rounded-2xl placeholder-purple-500 focus:ring-2 focus:ring-purple-500 transition-all no-spin"
             />
 
             {error && <p className="text-purple-700 text-sm text-center animate-shake">{error}</p>}
-
             {success && (
               <div className="flex items-center justify-center gap-2 bg-green-100/70 text-green-800 rounded-lg p-2 text-sm font-semibold animate-bounce">
                 Registration successful!
@@ -140,26 +128,20 @@ export default function RegisterPage() {
           60% { transform: translateX(-5px); }
           80% { transform: translateX(5px); }
         }
-        .animate-shake {
-          animation: shake 0.4s;
-        }
+        .animate-shake { animation: shake 0.4s; }
 
         @keyframes slideUpFade {
           0% { opacity: 0; transform: translateY(40px); }
           100% { opacity: 1; transform: translateY(0); }
         }
-        .animate-slideUpFade {
-          animation: slideUpFade 0.8s ease-out;
-        }
+        .animate-slideUpFade { animation: slideUpFade 0.8s ease-out; }
 
         .no-spin::-webkit-inner-spin-button,
         .no-spin::-webkit-outer-spin-button {
           -webkit-appearance: none !important;
           margin: 0;
         }
-        .no-spin {
-          -moz-appearance: textfield !important;
-        }
+        .no-spin { -moz-appearance: textfield !important; }
       `}</style>
     </div>
   );
