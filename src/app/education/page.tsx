@@ -35,10 +35,13 @@ export default function Education() {
   return (
     <div className="relative min-h-screen font-sans overflow-hidden">
 
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg1.jpg')" }}
-      ></div>
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center filter blur-sm brightness-90"
+          style={{ backgroundImage: "url('/bg1.jpg')" }}
+        ></div>
+        <div className="absolute inset-0 bg-purple-900/20"></div> 
+      </div>
 
       <nav className="flex gap-6 fixed top-6 right-6 z-20">
         {["Home", "About", "Contact", "Hobbies"].map((text) => (
@@ -80,6 +83,9 @@ export default function Education() {
         </div>
 
       </div>
+
+      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 opacity-20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-10 right-16 w-80 h-80 bg-purple-600 opacity-20 rounded-full blur-3xl animate-pulse delay-300"></div>
 
       <style>
         {`

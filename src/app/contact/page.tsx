@@ -17,10 +17,14 @@ export default function Contact() {
   return (
     <div className="relative h-screen font-sans overflow-hidden">
 
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg1.jpg')" }}
-      ></div>
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0 bg-cover bg-center filter blur-sm brightness-90"
+          style={{ backgroundImage: "url('/bg1.jpg')" }}
+        ></div>
+
+        <div className="absolute inset-0 bg-purple-900/20"></div>
+      </div>
 
       <nav className="flex gap-6 fixed top-6 right-6 z-20">
         {["Home", "About", "Education", "Hobbies"].map((text) => (

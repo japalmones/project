@@ -15,11 +15,14 @@ export default function About() {
 
   return (
     <div className="relative min-h-screen font-sans overflow-hidden">
-
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg1.jpg')" }}
-      ></div>
+      
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center filter blur-sm brightness-90"
+          style={{ backgroundImage: "url('/bg1.jpg')" }}
+        ></div>
+        <div className="absolute inset-0 bg-purple-900/20"></div> {/* light overlay */}
+      </div>
 
       <nav className="flex gap-6 fixed top-6 right-6 z-20">
         {["Home", "Contact", "Education", "Hobbies"].map((text) => (
@@ -44,15 +47,15 @@ export default function About() {
         <p className="text-lg md:text-xl max-w-2xl text-center text-purple-100 leading-relaxed mb-12 animate-fadeUp delay-200">
           Hello! I'm <span className="text-purple-300 font-semibold">Joyce Anne Palmones</span>, but you can call me <span className="text-purple-300 font-semibold">Jaja</span>.  
           I am a passionate and creative person who loves expressing myself through <span className="text-purple-300 font-semibold">drawing and art</span>.<br /><br />
-          I enjoy learning new things, improving my skills, and exploring ideas through simple projects inspired by everyday life.
+          I enjoy learning new things, improving my skills, and exploring ideas through simple projects.
         </p>
 
         <div className="bg-purple-800/50 p-8 rounded-2xl shadow-2xl max-w-xl text-center border border-purple-600 animate-fadeUp delay-400">
           <h2 className={`${kaushan.className} text-3xl md:text-4xl text-purple-300 mb-4`}>Who I Am</h2>
           <p className="text-lg md:text-xl text-purple-100 leading-relaxed">
-            I value creativity, simplicity, and meaningful moments.  
+            I'm someone who value creativity, simplicity, and meaningful moments.  
             I’m curious, motivated, and always looking to grow and express myself.  
-            I enjoy small projects and experiences that help me learn and create art from the heart.
+
           </p>
         </div>
 
