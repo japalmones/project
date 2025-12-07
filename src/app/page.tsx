@@ -1,89 +1,70 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Kaushan_Script } from 'next/font/google';
+import { useRouter } from "next/navigation";
+import { Kaushan_Script } from "next/font/google";
+import { Button } from "@/components/ui/button";
 
-const kaushan = Kaushan_Script({ subsets: ['latin'], weight: '400' });
+const kaushan = Kaushan_Script({ subsets: ["latin"], weight: "400" });
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null; 
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
 
   return (
-    <div className="relative h-screen font-sans overflow-hidden">
-
+    <div
+      className="relative h-screen w-full overflow-hidden bg-[#030014] text-white"
+      style={{
+        backgroundImage: "url('/bg22.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg1.jpg')" }}
-      ></div>
-
-      <nav className="flex gap-6 fixed top-6 right-6 z-20">
-        {["About", "Contact", "Education", "Hobbies"].map((text) => (
-          <div key={text} className="relative group">
-            <div className="absolute -inset-1 bg-purple-400 rounded-xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity pointer-events-none"></div>
-            <a
-              href={`/${text.toLowerCase()}`}
-              className="relative px-6 py-2 bg-purple-600 text-white text-lg rounded-xl font-medium 
-                         shadow-lg hover:bg-purple-700 hover:shadow-xl transition-all z-10"
-            >
-              {text}
-            </a>
-          </div>
-        ))}
-      </nav>
-
-      <div className="relative flex flex-col md:flex-row items-center justify-center h-screen px-4 sm:px-6 md:px-10 bg-purple-900/20 animate-fadeIn">
-
-        <div className="relative flex justify-center mb-10 md:mb-0 md:mr-16">
-          <div className="absolute w-[350px] h-[500px] rounded-[60px] bg-purple-500/60 blur-[90px] opacity-90"></div>
-          <div className="absolute w-[350px] h-[500px] rounded-[60px] bg-purple-300/40 blur-[120px] opacity-70"></div>
-          <div className="relative w-[330px] h-[480px] rounded-[60px] overflow-hidden shadow-2xl">
-            <Image
-              src="/profile.jpg"
-              alt="Profile Picture"
-              width={330}
-              height={480}
-              className="object-cover w-full h-full"
-            />
-          </div>
-        </div>
-
+        className="absolute inset-0 -z-10 opacity-25"
+        style={{
+          backgroundImage:
+            "linear-gradient(#00eaff25 1px, transparent 1px), linear-gradient(90deg, #00eaff25 1px, transparent 1px)",
+          backgroundSize: "50px 50px",
+          animation: "moveGrid 10s linear infinite",
+        }}
+      />
+      <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-6">
+        <h1 className={`${kaushan.className} text-7xl mb-4`}>
+          <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 bg-clip-text text-transparent text-9xl">
+            Welcome
+          </span>{" "}
+          to{" "}
     
-        <div className="text-center md:text-left max-w-lg">
-          <h1 className={`${kaushan.className} text-6xl md:text-7xl text-purple-100 drop-shadow-2xl tracking-wide`}>
-            Joyce Anne Quiñones Palmones
-          </h1>
-          
-          <p className="text-2xl mt-2 text-purple-200 font-light">“Jaja”</p>
+          <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-green-400 bg-clip-text text-transparent text-8xl font-bold">
+            Positions Manager
+          </span>
+        </h1>
 
-          <p className="text-xl mt-4 text-purple-300 italic">
-            “My art? A mix of heart, chaos, and magic.”
-          </p>
+        <p className="bg-gradient-to-r from-teal-300 via-cyan-300 to-green-300 bg-clip-text text-transparent max-w-lg mb-6">
+          Manage organizational positions.
+        </p>
 
-          <p className="text-lg mt-6 text-purple-200 opacity-90 leading-relaxed">
-            Hi, I’m Jaja, a creative soul who loves drawing and exploring new ideas.
-            Feel free to explore and learn more about me.
-          </p>
+        <div className="flex gap-4">
+
+          <Button
+            onClick={() => router.push("/register")}
+            className="bg-gradient-to-r from-green-400 via-cyan-400 to-teal-400 text-white hover:brightness-110"
+          >
+            Get Started
+          </Button>
+
+          <Button
+            onClick={() => router.push("/login")}
+            className="bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-white hover:brightness-110"
+          >
+            Login
+          </Button>
         </div>
       </div>
-
-      <style>
-        {`
-          .animate-fadeIn {
-            opacity: 0;
-            animation: fadeIn 1.2s ease-in-out forwards;
-          }
-          @keyframes fadeIn {
-            to { opacity: 1; }
-          }
-        `}
-      </style>
     </div>
   );
 }
